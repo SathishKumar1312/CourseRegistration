@@ -14,6 +14,8 @@ function Courses({ courses, reload, setReload }) {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const url = "https://courseregistration-50030584403.development.catalystappsail.in/";
+
   async function handleSubmit(e) {
     e.preventDefault();
     if (!courseName || !trainer || !duration) {
@@ -29,7 +31,7 @@ function Courses({ courses, reload, setReload }) {
     setIsLoading(true);
 
     try {
-      let response = await axios.post("http://localhost:8080/addCourse", {
+      let response = await axios.post((url + "addCourse"), {
         courseName,
         trainer,
         durationInWeeks: duration,

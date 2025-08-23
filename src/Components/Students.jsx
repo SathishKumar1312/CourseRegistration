@@ -11,6 +11,9 @@ function Students({ students, reload, setReload }) {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const url =
+    "https://courseregistration-50030584403.development.catalystappsail.in/";
+
   useEffect(() => {
     if (editId !== -1) {
       const student = students.find((item) => item.id === editId);
@@ -35,7 +38,7 @@ function Students({ students, reload, setReload }) {
     setIsLoading(true);
 
     try {
-      let response = await axios.put("http://localhost:8080/updateStudent", {
+      let response = await axios.put((url + "updateStudent"), {
         id,
         name: updateName,
         email: updateMail,
@@ -58,9 +61,7 @@ function Students({ students, reload, setReload }) {
   async function handleDelete(id) {
     setIsLoading(true);
     try {
-      let response = await axios.delete(
-        `http://localhost:8080/deleteStudent/${id}`
-      );
+      let response = await axios.delete(`${url}deleteStudent/${id}`);
       setIsLoading(false);
       setReload(!reload);
       toast.success(response.data);
@@ -84,7 +85,9 @@ function Students({ students, reload, setReload }) {
       <tbody>
         {students.length === 0 && (
           <tr>
-            <td colSpan={6} style={{ textAlign: "center" }}>No students enrolled</td>
+            <td colSpan={6} style={{ textAlign: "center" }}>
+              No students enrolled
+            </td>
           </tr>
         )}
         {students.map((item) => (
@@ -121,10 +124,17 @@ function Students({ students, reload, setReload }) {
                 </td>
                 <td>{item.weeksLeft}</td>
                 <td>
-                  <button onClick={() => handleUpdate(item.id)} disabled={isLoading}>Update</button>
+                  <button
+                    onClick={() => handleUpdate(item.id)}
+                    disabled={isLoading}
+                  >
+                    Update
+                  </button>
                 </td>
                 <td>
-                  <button onClick={() => setEditId(-1)} disabled={isLoading}>Cancel</button>
+                  <button onClick={() => setEditId(-1)} disabled={isLoading}>
+                    Cancel
+                  </button>
                 </td>
               </>
             )}

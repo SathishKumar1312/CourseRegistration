@@ -14,13 +14,15 @@ function HomePage() {
 
   const [reload, setReload] = useState(false);
 
+  const url = "https://courseregistration-50030584403.development.catalystappsail.in/";
+
   async function fetchCourses() {
-    const res = await axios.get("http://localhost:8080/courses");
+    const res = await axios.get(url + "courses");
     setCourses(res.data);
   }
 
   async function fetchStudents() {
-    const res = await axios.get("http://localhost:8080/students");
+    const res = await axios.get(url + "students");
     setStudents(res.data);
   }
 

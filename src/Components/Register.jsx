@@ -9,6 +9,9 @@ function Register({ courses, reload, setReload }) {
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const url =
+    "https://courseregistration-50030584403.development.catalystappsail.in/";
+
   // Convert your course list into react-select options
   const courseOptions = courses.map((c) => ({
     value: c.courseName,
@@ -100,10 +103,10 @@ function Register({ courses, reload, setReload }) {
 
     setIsLoading(true);
     try {
-      const res = await axios.post("http://localhost:8080/addStudent", {
+      const res = await axios.post(url + "addStudent", {
         name,
         email,
-        courseName: course
+        courseName: course,
       });
 
       if (res.status === 201 || res.status === 200) {

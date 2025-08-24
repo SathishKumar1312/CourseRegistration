@@ -69,23 +69,7 @@ function Students({ students, reload, setReload, isLoading }) {
       toast.error(error.response.data);
     }
   }
-  // sample data
-  students = [
-    {
-      id: 1,
-      name: "John Doe",
-      email: "john@example.com",
-      courseName: "React",
-      weeksLeft: 4,
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      email: "jane@example.com",
-      courseName: "Angular",
-      weeksLeft: 6,
-    },
-  ];
+
   return (
     <table border={1} style={{ marginBottom: "30px" }}>
       <thead>
@@ -101,7 +85,7 @@ function Students({ students, reload, setReload, isLoading }) {
       <tbody>
         {isLoading && (
           <tr>
-            <td colSpan={4} style={{ position: "relative", height: "80px" }}>
+            <td colSpan={6} style={{ position: "relative", height: "80px" }}>
               <ScaleLoader
                 color="#fef8f8"
                 size={50}

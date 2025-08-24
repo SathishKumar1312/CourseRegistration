@@ -62,11 +62,6 @@ function Courses({ courses, reload, setReload, isLoading }) {
     setCourseId(clickedCourseId);
   }
 
-  courses = [
-    { id: 1, courseName: "React", trainer: "John Doe", durationInWeeks: 4 },
-    { id: 2, courseName: "Angular", trainer: "Jane Smith", durationInWeeks: 6 },
-  ];
-
   return (
     <div>
       <table border={1}>

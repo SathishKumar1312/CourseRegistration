@@ -10,7 +10,7 @@ function Register({ courses, reload, setReload }) {
   const [isLoading, setIsLoading] = useState(false);
 
   const url =
-    "https://courseregistration-50030584403.development.catalystappsail.in/";
+    "https://courseregistrationbackend-7kgk.onrender.com/";
 
   // Convert your course list into react-select options
   const courseOptions = courses.map((c) => ({

@@ -16,7 +16,7 @@ function Courses({ courses, reload, setReload, isLoading }) {
   const [isAdding, setIsAdding] = useState(false);
 
   const url =
-    "https://courseregistration-50030584403.development.catalystappsail.in/";
+    "https://courseregistrationbackend-7kgk.onrender.com/";
 
   async function handleSubmit(e) {
     e.preventDefault();

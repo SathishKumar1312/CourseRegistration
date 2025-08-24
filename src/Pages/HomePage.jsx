@@ -16,7 +16,7 @@ function HomePage() {
   const [reload, setReload] = useState(false);
 
   const url =
-    "https://courseregistration-50030584403.development.catalystappsail.in/";
+    "https://courseregistrationbackend-7kgk.onrender.com/";
 
   async function fetchCourses() {
     try {

@@ -7,7 +7,7 @@ function CourseStudent({ courseId, courses }) {
   const [isLoading, setIsLoading] = useState(false);
 
   const url =
-    "https://courseregistration-50030584403.development.catalystappsail.in/";
+    "https://courseregistrationbackend-7kgk.onrender.com/";
 
   async function fetchCourseStudents() {
     try {

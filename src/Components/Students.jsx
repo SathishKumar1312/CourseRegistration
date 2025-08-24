@@ -12,7 +12,7 @@ function Students({ students, reload, setReload, isLoading }) {
   const [isAdding, setIsAdding] = useState(false);
 
   const url =
-    "https://courseregistration-50030584403.development.catalystappsail.in/";
+    "https://courseregistrationbackend-7kgk.onrender.com/";
 
   useEffect(() => {
     if (editId !== -1) {

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
+import { ScaleLoader } from "react-spinners";
 
 function Students({ students, reload, setReload, isLoading }) {
   const [editId, setEditId] = useState(-1);
@@ -68,22 +69,35 @@ function Students({ students, reload, setReload, isLoading }) {
       toast.error(error.response.data);
     }
   }
-
+  // sample data
+  students = [
+    {
+      id: 1,
+      name: "John Doe",
+      email: "john@example.com",
+      courseName: "React",
+      weeksLeft: 4,
+    },
+    {
+      id: 2,
+      name: "Jane Smith",
+      email: "jane@example.com",
+      courseName: "Angular",
+      weeksLeft: 6,
+    },
+  ];
   return (
-    <table border={1}>
-      {/* Only render thead when NOT editing */}
-      {editId === -1 && (
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Student Name</th>
-            <th>Mail ID</th>
-            <th>Course Enrolled</th>
-            <th>Weeks Left</th>
-            <th colSpan={2}>Modify</th>
-          </tr>
-        </thead>
-      )}
+    <table border={1} style={{ marginBottom: "30px" }}>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Student Name</th>
+          <th>Mail ID</th>
+          <th>Course Enrolled</th>
+          <th>Weeks Left</th>
+          <th colSpan={2}>Modify</th>
+        </tr>
+      </thead>
       <tbody>
         {isLoading && (
           <tr>
@@ -112,8 +126,8 @@ function Students({ students, reload, setReload, isLoading }) {
           <tr key={item.id}>
             {editId === item.id ? (
               <>
-                <td>{item.id}</td>
-                <td>
+                <td data-label="ID">{item.id}</td>
+                <td data-label="Student Name">
                   <input
                     type="text"
                     placeholder="Enter the name"
@@ -121,7 +135,7 @@ function Students({ students, reload, setReload, isLoading }) {
                     onChange={(e) => setUpdateName(e.target.value)}
                   />
                 </td>
-                <td>
+                <td data-label="Mail ID">
                   <input
                     type="text"
                     placeholder="Enter the Mail"
@@ -129,7 +143,7 @@ function Students({ students, reload, setReload, isLoading }) {
                     onChange={(e) => setUpdateMail(e.target.value)}
                   />
                 </td>
-                <td>
+                <td data-label="Course Enrolled">
                   <input
                     type="text"
                     placeholder="Enter the Course"
@@ -137,16 +151,14 @@ function Students({ students, reload, setReload, isLoading }) {
                     onChange={(e) => setUpdateCourse(e.target.value)}
                   />
                 </td>
-                <td>{item.weeksLeft}</td>
-                <td>
+                <td data-label="Weeks Left">{item.weeksLeft}</td>
+                <td data-label="Modify" className="action-cell">
                   <button
                     onClick={() => handleUpdate(item.id)}
                     disabled={isAdding}
                   >
                     Update
                   </button>
-                </td>
-                <td>
                   <button onClick={() => setEditId(-1)} disabled={isAdding}>
                     Cancel
                   </button>
@@ -154,15 +166,13 @@ function Students({ students, reload, setReload, isLoading }) {
               </>
             ) : (
               <>
-                <td>{item.id}</td>
-                <td>{item.name}</td>
-                <td>{item.email}</td>
-                <td>{item.courseName}</td>
-                <td>{item.weeksLeft}</td>
-                <td>
+                <td data-label="ID">{item.id}</td>
+                <td data-label="Student Name">{item.name}</td>
+                <td data-label="Mail ID">{item.email}</td>
+                <td data-label="Course Enrolled">{item.courseName}</td>
+                <td data-label="Weeks Left">{item.weeksLeft}</td>
+                <td data-label="Modify" className="action-cell">
                   <button onClick={() => setEditId(item.id)}>Update</button>
-                </td>
-                <td>
                   <button onClick={() => handleDelete(item.id)}>Delete</button>
                 </td>
               </>

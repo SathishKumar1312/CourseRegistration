@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
+import { ScaleLoader } from "react-spinners";
 function CourseStudent({ courseId, courses }) {
   const [students, setStudents] = useState([]);
   const [isLoading, setIsLoading] = useState(false);

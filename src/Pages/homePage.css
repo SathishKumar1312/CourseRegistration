@@ -323,3 +323,99 @@ th, td {
     scrollbar-color: #888 #f0f0f0;
   }
 }
+
+/* Style buttons inside action cell */
+.action-cell {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap; /* if screen is very small, they wrap nicely */
+}
+
+.action-cell button {
+  flex: 1; /* equal width */
+  min-width: 70px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+/* Different colors for update & delete */
+.action-cell button:first-child {
+  background: #4caf50;
+  color: white;
+}
+.action-cell button:first-child:hover {
+  background: #45a049;
+}
+
+.action-cell button:last-child {
+  background: #f44336;
+  color: white;
+}
+.action-cell button:last-child:hover {
+  background: #da190b;
+}
+
+/* Mobile: keep them side by side even in stacked rows */
+@media (max-width: 550px) {
+  .action-cell {
+    justify-content: flex-start;
+  }
+  .action-cell button {
+    flex: none;
+  }
+}
+
+@media (max-width: 550px) {
+  thead {
+    display: none;
+  }
+
+  table {
+    width: 80vw;
+    border-collapse: collapse;
+  }
+
+  td {
+    display: grid;
+    grid-template-columns: 130px minmax(0, 1fr);
+    align-items: center;
+    gap: 8px;
+    padding: 8px 6px;
+    border: none;
+  }
+
+  td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #bbb;
+    justify-self: start;
+    text-align: left;
+  }
+
+  /* ✅ Normal text cells → align to end (right) */
+  td:not(.action-cell):not(:has(input)) {
+    justify-items: end;
+    text-align: right;
+  }
+
+  /* ✅ Input fields → always start from left margin */
+  td input {
+    justify-self: start;
+    width: 100%;
+    margin: 0;
+    text-align: left;
+  }
+
+  /* ✅ Action buttons at the right end */
+  .action-cell {
+    grid-column: 2;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+}
+

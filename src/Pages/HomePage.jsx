@@ -12,18 +12,34 @@ function HomePage() {
   const [viewStudent, setViewStudent] = useState(false);
   const [viewRegister, setViewRegister] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(false);
   const [reload, setReload] = useState(false);
 
-  const url = "https://courseregistration-50030584403.development.catalystappsail.in/";
+  const url =
+    "https://courseregistration-50030584403.development.catalystappsail.in/";
 
   async function fetchCourses() {
-    const res = await axios.get(url + "courses");
-    setCourses(res.data);
+    try {
+      setIsLoading(true);
+      const res = await axios.get(url + "courses");
+      setCourses(res.data);
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   async function fetchStudents() {
-    const res = await axios.get(url + "students");
-    setStudents(res.data);
+    try {
+      setIsLoading(true);
+      const res = await axios.get(url + "students");
+      setStudents(res.data);
+    } catch (error) {
+      console.error("Error fetching students:", error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -67,17 +83,28 @@ function HomePage() {
 
         <section>
           {viewCourse && (
-            <Courses courses={courses} reload={reload} setReload={setReload} />
+            <Courses
+              courses={courses}
+              reload={reload}
+              setReload={setReload}
+              isLoading={isLoading}
+            />
           )}
           {viewStudent && (
             <Students
               students={students}
               reload={reload}
               setReload={setReload}
+              isLoading={isLoading}
             />
           )}
           {viewRegister && (
-            <Register courses={courses} reload={reload} setReload={setReload} />
+            <Register
+              courses={courses}
+              reload={reload}
+              setReload={setReload}
+              isLoading={isLoading}
+            />
           )}
         </section>
       </div>

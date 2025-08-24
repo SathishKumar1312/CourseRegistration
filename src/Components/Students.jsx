@@ -1,15 +1,14 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import "./students.css";
 
-function Students({ students, reload, setReload }) {
+function Students({ students, reload, setReload, isLoading }) {
   const [editId, setEditId] = useState(-1);
   const [updateName, setUpdateName] = useState("");
   const [updateMail, setUpdateMail] = useState("");
   const [updateCourse, setUpdateCourse] = useState("");
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
 
   const url =
     "https://courseregistration-50030584403.development.catalystappsail.in/";
@@ -30,27 +29,26 @@ function Students({ students, reload, setReload }) {
   }, [editId, students]);
 
   async function handleUpdate(id) {
-    if (updateName == "" || updateMail == "" || updateCourse == "") {
+    if (updateName === "" || updateMail === "" || updateCourse === "") {
       toast.error("Field Cannot be empty");
       return;
     }
 
-    setIsLoading(true);
-
+    setIsAdding(true);
     try {
-      let response = await axios.put((url + "updateStudent"), {
+      let response = await axios.put(url + "updateStudent", {
         id,
         name: updateName,
         email: updateMail,
         courseName: updateCourse,
       });
-      setIsLoading(false);
+      setIsAdding(false);
       setReload(!reload);
       setEditId(-1);
       toast.success(response.data);
     } catch (error) {
-      setIsLoading(false);
-      if (Object.is(error.response)) {
+      setIsAdding(false);
+      if (error.response) {
         toast.error(error.response.data);
       } else {
         toast.error(error?.message);
@@ -59,31 +57,51 @@ function Students({ students, reload, setReload }) {
   }
 
   async function handleDelete(id) {
-    setIsLoading(true);
+    setIsAdding(true);
     try {
       let response = await axios.delete(`${url}deleteStudent/${id}`);
-      setIsLoading(false);
+      setIsAdding(false);
       setReload(!reload);
       toast.success(response.data);
     } catch (error) {
-      setIsLoading(false);
+      setIsAdding(false);
       toast.error(error.response.data);
     }
   }
+
   return (
     <table border={1}>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Student Name</th>
-          <th>Mail ID</th>
-          <th>Course Enrolled</th>
-          <th>Weeks Left</th>
-          <th colSpan={2}>Modify</th>
-        </tr>
-      </thead>
+      {/* Only render thead when NOT editing */}
+      {editId === -1 && (
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Student Name</th>
+            <th>Mail ID</th>
+            <th>Course Enrolled</th>
+            <th>Weeks Left</th>
+            <th colSpan={2}>Modify</th>
+          </tr>
+        </thead>
+      )}
       <tbody>
-        {students.length === 0 && (
+        {isLoading && (
+          <tr>
+            <td colSpan={4} style={{ position: "relative", height: "80px" }}>
+              <ScaleLoader
+                color="#fef8f8"
+                size={50}
+                style={{
+                  position: "absolute",
+                  left: "50%",
+                  top: "50%",
+                  transform: "translate(-50%, -50%)",
+                }}
+              />
+            </td>
+          </tr>
+        )}
+        {!isLoading && students.length === 0 && (
           <tr>
             <td colSpan={6} style={{ textAlign: "center" }}>
               No students enrolled
@@ -92,13 +110,12 @@ function Students({ students, reload, setReload }) {
         )}
         {students.map((item) => (
           <tr key={item.id}>
-            {editId === item.id && (
+            {editId === item.id ? (
               <>
                 <td>{item.id}</td>
                 <td>
                   <input
                     type="text"
-                    name="updateName"
                     placeholder="Enter the name"
                     value={updateName}
                     onChange={(e) => setUpdateName(e.target.value)}
@@ -107,7 +124,6 @@ function Students({ students, reload, setReload }) {
                 <td>
                   <input
                     type="text"
-                    name="updateMail"
                     placeholder="Enter the Mail"
                     value={updateMail}
                     onChange={(e) => setUpdateMail(e.target.value)}
@@ -116,7 +132,6 @@ function Students({ students, reload, setReload }) {
                 <td>
                   <input
                     type="text"
-                    name="updateCourse"
                     placeholder="Enter the Course"
                     value={updateCourse}
                     onChange={(e) => setUpdateCourse(e.target.value)}
@@ -126,19 +141,18 @@ function Students({ students, reload, setReload }) {
                 <td>
                   <button
                     onClick={() => handleUpdate(item.id)}
-                    disabled={isLoading}
+                    disabled={isAdding}
                   >
                     Update
                   </button>
                 </td>
                 <td>
-                  <button onClick={() => setEditId(-1)} disabled={isLoading}>
+                  <button onClick={() => setEditId(-1)} disabled={isAdding}>
                     Cancel
                   </button>
                 </td>
               </>
-            )}
-            {editId !== item.id && (
+            ) : (
               <>
                 <td>{item.id}</td>
                 <td>{item.name}</td>

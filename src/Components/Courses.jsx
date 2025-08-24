@@ -2,8 +2,9 @@ import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import CourseStudent from "./CourseStudent";
+import { ScaleLoader } from "react-spinners";
 
-function Courses({ courses, reload, setReload }) {
+function Courses({ courses, reload, setReload, isLoading }) {
   const [viewAddCourse, setViewAddCourse] = useState(false);
   const [viewCourseStudents, setViewCourseStudents] = useState(false);
   const [courseId, setCourseId] = useState(null);
@@ -12,9 +13,10 @@ function Courses({ courses, reload, setReload }) {
   const [trainer, setTrainer] = useState("");
   const [duration, setDuration] = useState("");
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
 
-  const url = "https://courseregistration-50030584403.development.catalystappsail.in/";
+  const url =
+    "https://courseregistration-50030584403.development.catalystappsail.in/";
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -28,16 +30,16 @@ function Courses({ courses, reload, setReload }) {
       return;
     }
 
-    setIsLoading(true);
+    setIsAdding(true);
 
     try {
-      let response = await axios.post((url + "addCourse"), {
+      let response = await axios.post(url + "addCourse", {
         courseName,
         trainer,
         durationInWeeks: duration,
       });
       if (response.status === 201) {
-        setIsLoading(false);
+        setIsAdding(false);
         setCourseName("");
         setTrainer("");
         setDuration("");
@@ -46,7 +48,7 @@ function Courses({ courses, reload, setReload }) {
         setReload(!reload);
       }
     } catch (error) {
-      setIsLoading(false);
+      setIsAdding(false);
       if (Object.is(error.response)) {
         toast.error(error?.response?.data);
       } else {
@@ -72,33 +74,54 @@ function Courses({ courses, reload, setReload }) {
           </tr>
         </thead>
         <tbody>
-          {!viewAddCourse && courses.length === 0 && (
+          {isLoading && (
+            <tr>
+              <td colSpan={4} style={{ position: "relative", height: "80px" }}>
+                <ScaleLoader
+                  color="#fef8f8"
+                  size={50}
+                  style={{
+                    position: "absolute",
+                    left: "50%",
+                    top: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                />
+              </td>
+            </tr>
+          )}
+          {!isLoading && !viewAddCourse && courses.length === 0 && (
             <tr>
               <td colSpan={4} style={{ textAlign: "center" }}>
                 No courses available
               </td>
             </tr>
           )}
+
           {courses.map((item) => (
             <tr key={item.id}>
               <td
+                data-label="ID"
                 onClick={() => handleViewCourseStudents(item.id)}
                 style={{ cursor: "pointer" }}
               >
                 {item.id}
               </td>
               <td
+                data-label="Course Name"
                 onClick={() => handleViewCourseStudents(item.id)}
                 style={{ cursor: "pointer" }}
               >
                 {item.courseName}
               </td>
-              <td>{item.trainer}</td>
-              <td>{item.durationInWeeks}</td>
+              <td data-label="Trainer">{item.trainer}</td>
+              <td data-label="Duration (weeks)">{item.durationInWeeks}</td>
             </tr>
           ))}
+
           {viewAddCourse && (
-            <tr>
+            <tr className="no-label-row">
+              {/* First cell blank maybe */}
               <td></td>
               <td>
                 <input
@@ -132,7 +155,7 @@ function Courses({ courses, reload, setReload }) {
       <div className={viewAddCourse ? "between-addCourse" : "center-addCourse"}>
         <button
           onClick={() => setViewAddCourse(!viewAddCourse)}
-          disabled={isLoading}
+          disabled={isAdding}
         >
           {viewAddCourse ? "Cancel" : "Add Course"}
         </button>
@@ -140,7 +163,7 @@ function Courses({ courses, reload, setReload }) {
           <button
             type="submit"
             onClick={(e) => handleSubmit(e)}
-            disabled={isLoading}
+            disabled={isAdding}
           >
             Submit
           </button>
@@ -149,7 +172,14 @@ function Courses({ courses, reload, setReload }) {
       {viewCourseStudents && (
         <>
           <CourseStudent courseId={courseId} courses={courses} />
-          <center><button onClick={() => setViewCourseStudents(false)} style={{ marginTop: 14, marginBottom: 50 }}>Close</button></center>
+          <center>
+            <button
+              onClick={() => setViewCourseStudents(false)}
+              style={{ marginTop: 14, marginBottom: 50 }}
+            >
+              Close
+            </button>
+          </center>
         </>
       )}
     </div>

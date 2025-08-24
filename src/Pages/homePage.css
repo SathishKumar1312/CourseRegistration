@@ -164,12 +164,14 @@ table td input:focus {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+  margin-bottom: 30px;
 }
 
 .center-addCourse {
   display: flex;
   justify-content: center;
   margin-top: 10px;
+  margin-bottom: 30px;
 }
 
 @media (prefers-color-scheme: light) {
@@ -212,5 +214,112 @@ table td input:focus {
   form ol {
     flex-direction: column;
     align-items: center;
+  }
+}
+
+/* Normal table looks fine for desktop */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  /* border: 1px solid #ddd; */
+  padding: 8px;
+  text-align: left;
+}
+
+/* ✅ Mobile responsive table */
+@media (max-width: 550px) {
+  h1{
+    font-size: 7vw;
+    margin-top: -4.5vh;
+  }
+  table {
+    width: 80vw;
+  }
+  thead {
+    display: none;
+  }
+
+  /* Existing mobile-card styles */
+  tr {
+    margin-bottom: 30px;
+    border-radius: 8px;
+    background: #1e1e1e;
+    padding: 10px;
+    overflow: hidden;
+    border-bottom: 1px solid #eee;
+  }
+
+  td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 6px;
+    border: none;
+  }
+  td + td {
+    border-top: 1px solid #333;
+  }
+  td::before {
+    content: attr(data-label);
+    padding-right: 25px;
+    font-weight: bold;
+    color: #bbb;
+    flex: 1;
+    text-align: left;
+  }
+  td {
+    flex: 2;
+    color: #fff;
+    text-align: right;
+  }
+
+  /* New override for input row: remove data-label formatting entirely */
+  tr.no-label-row td::before {
+    content: none;
+  }
+  tr.no-label-row td {
+    /* Restore display to default stretched layout for inputs */
+    display: block;
+    text-align: left;
+    padding: 6px;
+  }
+  tr.no-label-row input {
+    width: 100%;
+    margin: 3px 0;
+  }
+
+  td {
+    max-width: 80vw;
+    overflow-x: auto;       /* enable horizontal scroll */
+    white-space: nowrap;    /* no text wrapping */
+    padding: 6px;
+  }
+
+  /* Custom scrollbar for better UI */
+  td::-webkit-scrollbar {
+    height: 8px;             /* scrollbar thickness */
+  }
+
+  td::-webkit-scrollbar-track {
+    background: #f0f0f0;     /* light background */
+    border-radius: 10px;
+  }
+
+  td::-webkit-scrollbar-thumb {
+    background: #888;        /* thumb color */
+    border-radius: 10px;
+  }
+
+  td::-webkit-scrollbar-thumb:hover {
+    background: #555;        /* darker on hover */
+  }
+
+  /* Firefox */
+  td {
+    scrollbar-width: thin;       /* makes scrollbar thinner */
+    scrollbar-color: #888 #f0f0f0;
   }
 }

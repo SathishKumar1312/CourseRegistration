@@ -1,20 +1,24 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 function CourseStudent({ courseId, courses }) {
-  const [students, setStudents] = React.useState([]);
+  const [students, setStudents] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const url =
     "https://courseregistration-50030584403.development.catalystappsail.in/";
 
   async function fetchCourseStudents() {
     try {
+      setIsLoading(true);
       const response = await axios.get(`${url}courseStudents/${courseId}`);
       setStudents(response.data);
     } catch (error) {
       toast.error(
         error?.response?.data || error.message || "Something went wrong"
       );
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -40,7 +44,23 @@ function CourseStudent({ courseId, courses }) {
           </tr>
         </thead>
         <tbody>
-          {students.length === 0 && (
+          {isLoading && (
+            <tr>
+              <td colSpan={4} style={{ position: "relative", height: "80px" }}>
+                <ScaleLoader
+                  color="#fef8f8"
+                  size={50}
+                  style={{
+                    position: "absolute",
+                    left: "50%",
+                    top: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                />
+              </td>
+            </tr>
+          )}
+          {!isLoading && students.length === 0 && (
             <tr>
               <td colSpan={4} style={{ textAlign: "center" }}>
                 No students enrolled

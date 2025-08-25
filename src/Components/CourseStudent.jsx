@@ -47,29 +47,40 @@ function CourseStudent({ courseId, courses }) {
           {isLoading && (
             <tr>
               <td colSpan={4} className="loading">
-                <ScaleLoader color="#36d7b7" size={30} />
-                <p style={{ textAlign: "center", whiteSpace: "wrap" }}>
-                  Backend is deployed on Free version of Render. It may take a
-                  while to respond for the first request.
-                </p>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: 10,
+                  }}
+                >
+                  <ScaleLoader color="#36d7b7" size={30} />
+                </div>
               </td>
             </tr>
           )}
           {!isLoading && students.length === 0 && (
             <tr>
-              <td colSpan={4} className="loading" style={{ height: "100px", fontSize: "20px" }}>
+              <td
+                colSpan={4}
+                className="loading"
+                style={{ height: "100px", fontSize: "20px" }}
+              >
                 No students enrolled
               </td>
             </tr>
           )}
-          {!isLoading && students.length > 0 && students.map((student) => (
-            <tr key={student.id}>
-              <td data-label="ID">{student.id}</td>
-              <td data-label="Name">{student.name}</td>
-              <td data-label="Email">{student.email}</td>
-              <td data-label="Enrolled Date">{student.startDate}</td>
-            </tr>
-          ))}
+          {!isLoading &&
+            students.length > 0 &&
+            students.map((student) => (
+              <tr key={student.id}>
+                <td data-label="ID">{student.id}</td>
+                <td data-label="Name">{student.name}</td>
+                <td data-label="Email">{student.email}</td>
+                <td data-label="Enrolled Date">{student.startDate}</td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </React.Fragment>

@@ -75,24 +75,33 @@ function Courses({ courses, reload, setReload, isLoading }) {
         <tbody>
           {isLoading && (
             <tr>
-              <td colSpan={6} style={{ position: "relative", height: "80px" }}>
-                <ScaleLoader
-                  color="#fef8f8"
-                  size={50}
+              <td colSpan={4} className="loading">
+                <div
                   style={{
-                    position: "relative",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: 10,
                   }}
-                />
-                <p>
-                  Backend is deployed on Free version of Render. It may take a
-                  while to respond for the first request.
-                </p>
+                >
+                  <ScaleLoader color="#36d7b7" size={30} />
+                  <p
+                    style={{
+                      whiteSpace: "wrap",
+                      textAlign: "center",
+                      marginBottom: 10,
+                    }}
+                  >
+                    Backend is deployed on Free version of Render. It may take a
+                    while to respond for the first request.
+                  </p>
+                </div>
               </td>
             </tr>
           )}
           {!isLoading && !viewAddCourse && courses.length === 0 && (
             <tr>
-              <td colSpan={4} style={{ textAlign: "center" }}>
+              <td colSpan={4} className="loading" style={{ height: "100px", fontSize: "20px" }}>
                 No courses available
               </td>
             </tr>

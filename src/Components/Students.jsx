@@ -84,24 +84,29 @@ function Students({ students, reload, setReload, isLoading }) {
       <tbody>
         {isLoading && (
           <tr>
-            <td colSpan={6} style={{ position: "relative", height: "80px" }}>
-              <ScaleLoader
-                color="#fef8f8"
-                size={50}
+            <td colSpan={6} className="loading">
+              <div
                 style={{
-                  position: "relative",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 10,
+                  width: "100%",
                 }}
-              />
-              <p>
-                Backend is deployed on Free version of Render. It may take a
-                while to respond for the first request.
-              </p>
+              >
+                <ScaleLoader color="#36d7b7" height={30} />
+                <p style={{ marginBottom: 10, whiteSpace: "wrap" }}>
+                  Backend is deployed on Free version of Render. It may take a
+                  while to respond for the first request.
+                </p>
+              </div>
             </td>
           </tr>
         )}
         {!isLoading && students.length === 0 && (
           <tr>
-            <td colSpan={6} style={{ textAlign: "center" }}>
+            <td colSpan={6} className="loading" style={{ height: "100px", fontSize: "20px" }}>
               No students enrolled
             </td>
           </tr>

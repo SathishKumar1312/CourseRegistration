@@ -48,7 +48,7 @@ function CourseStudent({ courseId, courses }) {
             <tr>
               <td colSpan={4} className="loading">
                 <ScaleLoader color="#36d7b7" size={30} />
-                <p>
+                <p style={{ textAlign: "center", whiteSpace: "wrap" }}>
                   Backend is deployed on Free version of Render. It may take a
                   while to respond for the first request.
                 </p>
@@ -62,12 +62,12 @@ function CourseStudent({ courseId, courses }) {
               </td>
             </tr>
           )}
-          {students.map((student) => (
+          {!isLoading && students.length > 0 && students.map((student) => (
             <tr key={student.id}>
-              <td>{student.id}</td>
-              <td>{student.name}</td>
-              <td>{student.email}</td>
-              <td>{student.startDate}</td>
+              <td data-label="ID">{student.id}</td>
+              <td data-label="Name">{student.name}</td>
+              <td data-label="Email">{student.email}</td>
+              <td data-label="Enrolled Date">{student.startDate}</td>
             </tr>
           ))}
         </tbody>

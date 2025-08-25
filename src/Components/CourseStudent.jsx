@@ -6,8 +6,7 @@ function CourseStudent({ courseId, courses }) {
   const [students, setStudents] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const url =
-    "https://courseregistrationbackend-7kgk.onrender.com/";
+  const url = "https://courseregistrationbackend-7kgk.onrender.com/";
 
   async function fetchCourseStudents() {
     try {
@@ -47,17 +46,18 @@ function CourseStudent({ courseId, courses }) {
         <tbody>
           {isLoading && (
             <tr>
-              <td colSpan={4} style={{ position: "relative", height: "80px" }}>
+              <td colSpan={6} style={{ position: "relative", height: "80px" }}>
                 <ScaleLoader
                   color="#fef8f8"
                   size={50}
                   style={{
-                    position: "absolute",
-                    left: "50%",
-                    top: "50%",
-                    transform: "translate(-50%, -50%)",
+                    position: "relative",
                   }}
                 />
+                <p>
+                  Backend is deployed on Free version of Render. It may take a
+                  while to respond for the first request.
+                </p>
               </td>
             </tr>
           )}

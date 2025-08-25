@@ -11,8 +11,7 @@ function Students({ students, reload, setReload, isLoading }) {
 
   const [isAdding, setIsAdding] = useState(false);
 
-  const url =
-    "https://courseregistrationbackend-7kgk.onrender.com/";
+  const url = "https://courseregistrationbackend-7kgk.onrender.com/";
 
   useEffect(() => {
     if (editId !== -1) {
@@ -90,12 +89,13 @@ function Students({ students, reload, setReload, isLoading }) {
                 color="#fef8f8"
                 size={50}
                 style={{
-                  position: "absolute",
-                  left: "50%",
-                  top: "50%",
-                  transform: "translate(-50%, -50%)",
+                  position: "relative",
                 }}
               />
+              <p>
+                Backend is deployed on Free version of Render. It may take a
+                while to respond for the first request.
+              </p>
             </td>
           </tr>
         )}
